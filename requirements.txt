@@ -1,0 +1,4 @@
+pandas
+streamlit
+numpy==1.26.4
+plotly-express
