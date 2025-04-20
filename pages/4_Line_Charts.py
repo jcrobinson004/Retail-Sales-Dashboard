@@ -4,7 +4,7 @@ import plotly.express as px
 
 st.set_page_config(page_title="Retail Sales Line Charts", layout="wide")
 
-st.title("Line Charts")
+st.markdown("<h1 style='text-align: center;'>Line Charts</h1>", unsafe_allow_html=True)
 
 st.markdown(
     """

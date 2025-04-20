@@ -5,7 +5,7 @@ import plotly.express as px
 
 st.set_page_config(page_title="Retail Sales Correlation", layout="wide")
 
-st.title("Correlation Charts")
+st.markdown("<h1 style='text-align: center;'>Correlation Charts</h1>", unsafe_allow_html=True)
 st.markdown(
     """
     <div style="font-size: 24;">

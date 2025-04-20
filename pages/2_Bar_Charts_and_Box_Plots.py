@@ -4,7 +4,7 @@ import plotly.express as px
 
 st.set_page_config(page_title="Retail Sales Profits", layout="wide")
 
-st.title("Bar Charts and Box Plots")
+st.markdown("<h1 style='text-align: center;'>Bar Charts and Box Plots</h1>", unsafe_allow_html=True)
 st.markdown(
     """
     <div style="font-size: 24;">
