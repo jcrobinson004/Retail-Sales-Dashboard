@@ -3,7 +3,6 @@ import pandas as pd
 
 # Data Dictionary for Retail Sales Dashboard
 # Set the title of the page
-st.title("Data Dictionary")
 st.markdown("<h1 style='text-align: center;'>Data Dictionary</h1>", unsafe_allow_html=True)
 
 # Add a description for the page
