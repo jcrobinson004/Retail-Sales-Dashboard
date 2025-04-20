@@ -4,14 +4,14 @@ import plotly.express as px
 
 st.set_page_config(page_title="Retail Sales Profits", layout="wide")
 
-st.title("Profits over Time")
+st.markdown("<h1 style='text-align: center;'>Profits Over Time</h1>", unsafe_allow_html=True)
 st.markdown(
     """
     <div style="font-size: 24px;">
 
     **Welcome to the Retail Sales Profit page.**
 
-    Choose a Product Group and Time Interval to Visualize Sales, Units, and Profits.
+    Choose a Product Group and Time Interval to Visualize Sales, Units, or Profits.
 
     </div>
     """,
@@ -224,3 +224,136 @@ if not group_df.empty:
     st.plotly_chart(line_chart_units, use_container_width=True)
     st.plotly_chart(line_chart_profit, use_container_width=True)
 
+#####################################
+month_order = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+]
+agg_df = df.groupby(['month','subgroup'], as_index=False)['profit'].mean()
+agg_df['profit_label'] = agg_df['profit'].apply(lambda x: f'${x:.2f}')
+agg_df['month'] = pd.Categorical(agg_df['month'],
+                                 categories=[m for m in month_order if m in agg_df['month'].unique()],
+                                 ordered=True)
+agg_df = agg_df.sort_values('month')
+
+metric_list = [
+    'Sales',
+    'Units',
+    'Profits'
+]
+
+col1, col2, col3 = st.columns([1, 1, 3]) # Adjust the ratios as needed
+
+with col1:
+    metric_chosen = st.selectbox(
+        "Choose a metric to visualize for all Groups:",
+        metric_list
+    )
+
+if metric_chosen == "Profits":
+    metric = 'profit'
+    agg_df = df.groupby(['month', 'subgroup'], as_index=False)[metric].mean()
+    agg_df['month'] = pd.Categorical(agg_df['month'],
+                                     categories=[m for m in month_order if m in agg_df['month'].unique()],
+                                     ordered=True)
+    agg_df = agg_df.sort_values('month')
+
+    line_chart = px.line(
+        data_frame=agg_df,
+        x='month',
+        y=metric,
+        color='subgroup',
+        markers=True,
+    ).update_layout(
+        title={
+            'text': f"Average {metric_chosen} by Month for Each Group",
+            'y': 0.98,
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'
+        },
+        xaxis_title='Month',
+        yaxis_title=f'Average {metric_chosen.capitalize()}',
+        font=dict(
+            size=15,
+        ),
+        legend_title_text='Group'
+    )
+
+    st.plotly_chart(line_chart, use_container_width=True)
+elif metric_chosen == "Sales":
+    metric = 'sales'
+    agg_df = df.groupby(['month', 'subgroup'], as_index=False)[metric].mean()
+    agg_df['month'] = pd.Categorical(agg_df['month'],
+                                     categories=[m for m in month_order if m in agg_df['month'].unique()],
+                                     ordered=True)
+    agg_df = agg_df.sort_values('month')
+
+    line_chart = px.line(
+        data_frame=agg_df,
+        x='month',
+        y=metric,
+        color='subgroup',
+        markers=True,
+    ).update_layout(
+        title={
+            'text': f"Average {metric_chosen} by Month for Each Group",
+            'y': 0.98,
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'
+        },
+        xaxis_title='Month',
+        yaxis_title=f'Average {metric_chosen.capitalize()}',
+        font=dict(
+            size=15,
+        ),
+        legend_title_text='Group'
+    )
+
+    st.plotly_chart(line_chart, use_container_width=True)
+elif metric_chosen == "Units":
+    metric = 'unitsordered'
+
+    agg_df = df.groupby(['month', 'subgroup'], as_index=False)[metric].mean()
+    agg_df['month'] = pd.Categorical(agg_df['month'],
+                                     categories=[m for m in month_order if m in agg_df['month'].unique()],
+                                     ordered=True)
+    agg_df = agg_df.sort_values('month')
+
+    line_chart = px.line(
+        data_frame=agg_df,
+        x='month',
+        y=metric,
+        color='subgroup',
+        markers=True,
+    ).update_layout(
+        title={
+            'text': f"Average {metric_chosen} by Month for Each Group",
+            'y': 0.98,
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'
+        },
+        xaxis_title='Month',
+        yaxis_title=f'Average {metric_chosen.capitalize()}',
+        font=dict(
+            size=15,
+        ),
+        legend_title_text='Group'
+    )
+    st.plotly_chart(line_chart, use_container_width=True)
+
+else:
+    with col1:
+        st.info("Please select a metric to visualize.")
