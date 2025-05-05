@@ -6,7 +6,7 @@ import pickle
 
 st.set_page_config(page_title="Profit Prediction", layout="wide")
 
-st.markdown("<h1 style='text-align: center;'>Profit Prediction</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Profit Predictions</h1>", unsafe_allow_html=True)
 st.markdown(
     """
     <div style="font-size: 24;">
