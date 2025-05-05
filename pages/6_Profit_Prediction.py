@@ -155,12 +155,6 @@ def load_model_from_gcs(model_url: object) -> Any | None:
 
 model = load_model_from_gcs(GCS_PUBLIC_MODEL_URL)
 
-# filename = "final_model.pkl"
-# model = None
-
-# with open(f'./pages/{filename}', 'rb') as f:
-#     model = pickle.load(f)
-
 prediction = model.predict([data_to_predict])
 
 st.text(f"Predicted Profit: ${prediction[0]:.2f}")
